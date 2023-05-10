@@ -3,5 +3,5 @@
 
 source sb-status2d
 
-icon_ram=""
-printf "%s%s %s%s" "$s2d_color3" "$icon_ram" "$(free -mh --si | grep '^Mem:' | awk '{print $3}')" "$s2d_reset" && exit 0
+icon_ram=""
+printf "%s%s %s%s" "$s2d_color2" "$icon_ram" "$(free -mh --si | grep '^Mem:' | awk '{print $3}')" "$s2d_reset" && exit 0

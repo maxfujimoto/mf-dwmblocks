@@ -7,13 +7,13 @@ info="$(amixer get Master | grep '%' | head -n1)"
 percent="$(echo "$info" | sed -E 's/.*\[(.*)%\].*/\1/')"
 
 if echo "$info" | grep -q 'off'; then
-    icon_volume="婢"
+    icon_volume="󰖁"
 elif [ "$percent" -lt 20 ]; then
-    icon_volume="奄"
+    icon_volume=""
 elif [ "$percent" -lt 60 ]; then
-    icon_volume="奔"
+    icon_volume="󰕾"
 else
-    icon_volume="墳"
+    icon_volume=""
 fi
 
-printf "%s%s %s%%%s" "$s2d_color3" "$icon_volume" "$percent" "$s2d_reset" && exit 0
+printf "%s%s %s%%%s" "$s2d_color2" "$icon_volume" "$percent" "$s2d_reset" && exit 0

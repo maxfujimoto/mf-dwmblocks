@@ -9,9 +9,8 @@ source sb-status2d
 status=$(emacsclient -a false -e 't')
 
 if [ "$status" = 't' ]; then
-    icon=""
+    printf "%s%s %s" "$s2d_color3" "" "$s2d_reset" && exit 0
 else
-    icon=""
+    exit 0
 fi
 
-printf "%s" "$s2d_color3" "$icon" "$s2d_reset" && exit 0

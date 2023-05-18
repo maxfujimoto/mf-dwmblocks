@@ -3,11 +3,12 @@
 static const Block blocks[] = {
     /* Icon         Command                 Interval    Signal */
     { "",              "sb-emacsdaemon",       60,         7       },
-    /* { "",              "sb-weather",           60,         12      }, */
     { "",              "sb-internet",          60,         10      },
     { "",              "sb-battery",           60,         0       },
     { "",              "sb-ram",               60,         0       },
     { "",              "sb-volume",            0,          11      },
+    { "",              "sb-weather",           1800,       12      },
+    { "",              "sb-moon",           3600,       13      },
     { "",              "sb-datetime",          10,         0       },
 };
 

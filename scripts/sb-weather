@@ -1,7 +1,7 @@
-#!/bin/sh
+#!/bin/dash
 # Description: Script to get local weather
 
-source sb-status2d
+. sb-status2d
 
 wttr=$(curl wttr.in/?format="%c%t+%w+%p+%u")
 

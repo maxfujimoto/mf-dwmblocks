@@ -6,7 +6,7 @@ enable_status2d=true
 $enable_status2d || return 0
 
 # use Xresources colors
-enable_Xresources=true
+enable_Xresources=false
 
 # status2d colors
 s2d_reset="^d^"

@@ -1,10 +1,10 @@
-#!/bin/bash
+#!/bin/dash
 
 #
 # sb-dot
 #
 
-# I'm gonna strongly interpret the dot!
+# I will strongly interpret the dot!
 
 . sb-status2d
 
@@ -12,43 +12,33 @@
 query=$(curl -s https://gcpdot.com/gcpindex.php)
 # Parse for first float
 variance=$(echo $query | grep -Po '<s t=[^>]+>\K[^<]+' | head -1)
+# Convert to 4 digit int
+variance="$(expr substr "$variance" 3 $(expr length "$variance" - 5))"
 
-
-if (( $(echo "$variance >= 0.01" | bc -l) )); then
-    color="#FFA8C0"
-fi
-if (( $(echo "$variance >= 0.05" | bc -l) )); then
-    color="#FF1E1E"
-fi
-if (( $(echo "$variance >= 0.08" | bc -l) )); then
-    color="#FFB82E"
-fi
-if (( $(echo "$variance >= 0.15" | bc -l) )); then
-    color="#FFD517"
-fi
-if (( $(echo "$variance >= 0.23" | bc -l) )); then
-    color="#FFFA40"
-fi
-if (( $(echo "$variance >= 0.30" | bc -l) )); then
-    color="#F9FA00"
-fi
-if (( $(echo "$variance >= 0.40" | bc -l) )); then
-    color="#AEFA00"
-fi
-if (( $(echo "$variance >= 0.90" | bc -l) )); then
-    color="#64FA64"
-fi
-if (( $(echo "$variance >= 0.9125" | bc -l) )); then
-    color="#64FAAB"
-fi
-if (( $(echo "$variance >= 0.93" | bc -l) )); then
-    color="#ACF2FF"
-fi
-if (( $(echo "$variance >= 0.95" | bc -l) )); then
-    color="#0EEEFF"
-fi
-if (( $(echo "$variance >= 1" | bc -l) )); then
+if [ $variance -gt 9999 ]; then
     color="#24CBFD"
+elif [ $variance -ge 9500 ]; then
+    color="#0EEEFF"
+elif [ $variance -ge 9300 ]; then
+    color="#ACF2FF"
+elif [ $variance -ge 9125 ]; then
+    color="#64FAAB"
+elif [ $variance -ge 9000 ]; then
+    color="#64FA64"
+elif [ $variance -ge 4000 ]; then
+    color="#AEFA00"
+elif [ $variance -ge 3000 ]; then
+    color="#F9FA00"
+elif [ $variance -ge 2300 ]; then
+    color="#FFFA40"
+elif [ $variance -ge 1500 ]; then
+    color="#FFD517"
+elif [ $variance -ge 0800 ]; then
+    color="#FFB82E"
+elif [ $variance -ge 0500 ]; then
+    color="#FF1E1E"
+elif [ $variance -ge 0100 ]; then
+    color="#FFA8C0"
 fi
 
 printf "%s%s%s" "^c$color^" "" "$s2d_reset" && exit 0

@@ -12,33 +12,40 @@
 query=$(curl -s https://gcpdot.com/gcpindex.php)
 # Parse for first float
 variance=$(echo $query | grep -Po '<s t=[^>]+>\K[^<]+' | head -1)
-# Convert to 4 digit int
-variance="$(expr substr "$variance" 3 $(expr length "$variance" - 5))"
+# Convert to 2 digit int
+variance="$(expr substr "$variance" 3 $(expr length "$variance" - 7))"
 
-if [ $variance -gt 9999 ]; then
-    color="#24CBFD"
-elif [ $variance -ge 9500 ]; then
-    color="#0EEEFF"
-elif [ $variance -ge 9300 ]; then
-    color="#ACF2FF"
-elif [ $variance -ge 9125 ]; then
-    color="#64FAAB"
-elif [ $variance -ge 9000 ]; then
-    color="#64FA64"
-elif [ $variance -ge 4000 ]; then
-    color="#AEFA00"
-elif [ $variance -ge 3000 ]; then
-    color="#F9FA00"
-elif [ $variance -ge 2300 ]; then
-    color="#FFFA40"
-elif [ $variance -ge 100 ]; then
-    color="#FFD517"
-elif [ $variance -ge 0500 ]; then
-    color="#FFB82E"
-elif [ $variance -ge 0100 ]; then
-    color="#FF1E1E"
-else
-    color="#FFA8C0"
-fi
+# Map to color
+red=$(
+    if [ "$variance" -lt 50 ]; then
+	result=$(expr 255 \* \( 100 - "$variance" \) / 100)
+	echo "$result"
+  else
+    echo 00
+  fi
+)
 
-printf "%s%s%s" "^c$color^" "" "$s2d_reset" && exit 0
+green=$(
+    if  [ "$variance" -lt 15 ] ; then
+	result=$(expr 51 \* $variance / 10)
+	echo "$result"
+    elif  [ "$variance" -gt 85 ] ; then
+	result=$(expr 51 \* \( 100 - $variance \) / 10)
+	echo "$result"
+    else
+	echo 255
+  fi
+)
+
+blue=$(
+  if [ "$variance" -gt 50 ]; then
+      result=$(expr 255 \* "$variance" / 100)
+    echo "$result"
+  else
+    echo 00
+  fi
+)
+
+color=$(printf "^c#%02X%02X%02X^" $red $green $blue)
+
+printf "%s%s%s" "$color" "" "$s2d_reset" && exit 0

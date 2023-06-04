@@ -31,13 +31,13 @@ elif [ $variance -ge 3000 ]; then
     color="#F9FA00"
 elif [ $variance -ge 2300 ]; then
     color="#FFFA40"
-elif [ $variance -ge 1500 ]; then
+elif [ $variance -ge 100 ]; then
     color="#FFD517"
-elif [ $variance -ge 0800 ]; then
-    color="#FFB82E"
 elif [ $variance -ge 0500 ]; then
-    color="#FF1E1E"
+    color="#FFB82E"
 elif [ $variance -ge 0100 ]; then
+    color="#FF1E1E"
+else
     color="#FFA8C0"
 fi
 
